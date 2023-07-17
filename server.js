@@ -1,16 +1,30 @@
-const express = require('express');
+import express from 'express';
+import cors from 'cors'
+import colors from 'colors'
+import connectDB from './config/db.js';
+import User from './model/userModel.js';
+
+// import userRoutes from './routes/usersRoutes.js'
 const app = express();
 const port = 5000;
+app.use(cors())
+connectDB()
 
-// Define a route to serve the JSON file
-app.get('/api/data', (req, res) => {
-    res.setHeader('Access-Control-Allow-Origin', 'http://localhost:4200');
-    res.setHeader('Access-Control-Allow-Methods', 'GET');
-    res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
-    // Read the JSON file
-    const jsonData = require('./data.json');
-    res.json(jsonData);
-});
+// Define a root route
+app.get('/resdata',(req,res) =>{
+    res.send("Hello Gagan")
+})
+
+app.get('/api/user', async (req, res) => {
+    try {
+      const data = await User.find(); // Retrieve data using your Mongoose model
+      console.log(data)
+      res.json(data);
+    } catch (err) {
+      res.status(500).json({ error: 'Internal server error' });
+    }
+  });
+
 // Start the server
 app.listen(port, () => {
     console.log(`Server is running on port ${port}`);
