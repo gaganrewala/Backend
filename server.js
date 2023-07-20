@@ -10,7 +10,7 @@ const router = express.Router()
 import productRoutes from './routes/productRoutes.js'
 import expressSession from 'express-session'
 import passport from 'passport';
-import {getAllProducts} from './controllers/productController.js'
+import {getAllProduct, getAllProducts,createProduct,updateProduct,deleteProduct} from './controllers/productController.js'
 import { Strategy as LocalStrategy } from 'passport-local';
 const app = express();
 const port = process.env.PORT || 5000;
@@ -56,8 +56,8 @@ passport.deserializeUser((id, done) => {
         done(err, user);
     });
 });
-app.use('/', userRoutes)
-app.use('/products', productRoutes)
+// app.use('/', userRoutes)
+// app.use('/products', productRoutes)
 // Start the server
 
 import {createUser,getAllUsers} from './controllers/userController.js'
@@ -67,6 +67,10 @@ app.post('/register', createUser);
 // User login
 app.post('/login', getAllUsers);
 app.get('/products', getAllProducts);
+app.get('/products/:id', getAllProduct);
+app.post('/products', createProduct);
+app.put('/products/:id', updateProduct);
+app.delete('/products/:id', deleteProduct);
 app.listen(port, () => {
     console.log(`Server is running on port ${port}`);
 });

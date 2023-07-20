@@ -5,7 +5,7 @@
   "main": "index.js",
   "type": "module",
   "scripts": {
-    "start":"node server",
+    "start": "node server",
     "data:import": "node seeder",
     "data:destroy": "node seeder -d"
   },
@@ -25,7 +25,8 @@
     "mongodb": "^5.7.0",
     "mongoose": "^7.3.4",
     "passport": "^0.6.0",
-    "passport-local": "^1.0.0"
+    "passport-local": "^1.0.0",
+    "uuid": "^9.0.0"
   },
   "devDependencies": {
     "eslint": "^8.45.0",
