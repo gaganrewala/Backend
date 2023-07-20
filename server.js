@@ -6,12 +6,14 @@ import connectDB from './config/db.js';
 import bodyParser from 'body-parser';
 import userRoutes from './routes/usersRoutes.js'
 import User from './model/user1Model.js';
+const router = express.Router()
 import productRoutes from './routes/productRoutes.js'
 import expressSession from 'express-session'
 import passport from 'passport';
+import {getAllProducts} from './controllers/productController.js'
 import { Strategy as LocalStrategy } from 'passport-local';
 const app = express();
-const port = 5000;
+const port = process.env.PORT || 5000;
 
 connectDB()
 // Middleware
@@ -24,7 +26,6 @@ app.use(expressSession({
   resave: false,
   saveUninitialized: false,
 }));
-
 // Initialize Passport and set up passport session
 app.use(passport.initialize());
 app.use(passport.session());
@@ -32,7 +33,7 @@ app.use(passport.session());
 passport.use(new LocalStrategy({ usernameField: 'email' },async (email, password, done) => {
     try {
         const user = await User.findOne({ email });
-        console.log(user)
+        // console.log(user)
         if (!user) {
             return done(null, false, { message: 'Invalid username.' });
         }
@@ -58,6 +59,14 @@ passport.deserializeUser((id, done) => {
 app.use('/', userRoutes)
 app.use('/products', productRoutes)
 // Start the server
+
+import {createUser,getAllUsers} from './controllers/userController.js'
+// User registration
+app.post('/register', createUser);
+
+// User login
+app.post('/login', getAllUsers);
+app.get('/products', getAllProducts);
 app.listen(port, () => {
     console.log(`Server is running on port ${port}`);
 });
