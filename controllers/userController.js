@@ -18,6 +18,7 @@ const createUser = async (req, res) => {
         res.status(500).json({ error: 'Internal Server Error' })
     }
 }
+
 // User login
 const getAllUsers = async (req, res) => {
     try {
