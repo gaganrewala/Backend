@@ -4,6 +4,7 @@ import  {
     getAllUsers,
     createUser,
 } from '../controllers/userController.js';
-router.post('/get', getAllUsers);
-router.post('/create', createUser);
+// router.post('/register', getAllUsers);
+router.post('/register', createUser);
+router.post('/login', getAllUsers);
 export default router

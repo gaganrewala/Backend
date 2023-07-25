@@ -11,5 +11,4 @@ const users =[
         role:"2"
     }
 ]
-
 export default users

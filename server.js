@@ -6,14 +6,13 @@ import connectDB from './config/db.js';
 import bodyParser from 'body-parser';
 import userRoutes from './routes/usersRoutes.js'
 import User from './model/user1Model.js';
-const router = express.Router()
 import productRoutes from './routes/productRoutes.js'
 import expressSession from 'express-session'
 import passport from 'passport';
-import {getAllProduct, getAllProducts,createProduct,updateProduct,deleteProduct} from './controllers/productController.js'
 import { Strategy as LocalStrategy } from 'passport-local';
 const app = express();
-const port = process.env.PORT || 5000;
+const port = 5000;
+// const port = process.env.PORT || 6000;
 
 connectDB()
 // Middleware
@@ -56,21 +55,9 @@ passport.deserializeUser((id, done) => {
         done(err, user);
     });
 });
-// app.use('/', userRoutes)
-// app.use('/products', productRoutes)
-// Start the server
 
-import {createUser,getAllUsers} from './controllers/userController.js'
-// User registration
-app.post('/register', createUser);
-
-// User login
-app.post('/login', getAllUsers);
-app.get('/products', getAllProducts);
-app.get('/products/:id', getAllProduct);
-app.post('/products', createProduct);
-app.put('/products/:id', updateProduct);
-app.delete('/products/:id', deleteProduct);
+app.use('/user',userRoutes)
+app.use('/api', productRoutes);
 app.listen(port, () => {
     console.log(`Server is running on port ${port}`);
 });

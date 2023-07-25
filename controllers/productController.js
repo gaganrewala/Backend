@@ -13,7 +13,6 @@ const getAllProducts = async (req, res) => {
 const getAllProduct = async (req, res) => {
     try {
         const user = await Product.findOne({ id: req.params.id });
-        console.log(user)
         if (!user) {
             return res.status(404).json({ error: 'User not found' });
         }
@@ -22,10 +21,6 @@ const getAllProduct = async (req, res) => {
         res.status(500).json({ error: 'Internal server error' });
     }
 };
-
-
-// update
-
 // Update a user by ID
 const updateProduct = async (req, res) => {
     try {
@@ -41,11 +36,10 @@ const updateProduct = async (req, res) => {
         res.status(500).json({ error: 'Internal server error' });
     }
 };
-// Update a user by ID
+// Delete a user by ID
 const deleteProduct = async (req, res) => {
-    const userId = req.params.userId;
     try {
-        const user = await Product.findOne({ userId });
+        const user = await Product.findOne({ id: req.params.id });
         const deletedUser = await Product.findByIdAndDelete(user._id);
         if (deletedUser) {
             res.json(deletedUser);
